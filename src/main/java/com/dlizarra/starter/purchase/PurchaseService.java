@@ -14,4 +14,5 @@ public interface PurchaseService {
 
     List<PurchaseDto> getPurchases();
 
+    Integer getSum();
 }

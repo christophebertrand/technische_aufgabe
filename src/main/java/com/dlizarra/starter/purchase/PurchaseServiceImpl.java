@@ -51,4 +51,14 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchases.forEach(x -> purchaseDto.add(mapper.map(x, PurchaseDto.class)));
         return purchaseDto;
     }
+
+    @Override
+    public Integer getSum() {
+        final List<Purchase> purchases = purchaseRepository.findAll();
+        int total = 0;
+        for (Purchase p : purchases) {
+            total += p.getPrice();
+        }
+        return total;
+    }
 }

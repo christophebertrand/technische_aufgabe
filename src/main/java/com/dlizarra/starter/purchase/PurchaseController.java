@@ -16,6 +16,11 @@ public class PurchaseController {
         return purchaseService.getPurchases();
     }
 
+    @GetMapping("/purchases/sum")
+    public Integer getSum() {
+        return purchaseService.getSum();
+    }
+
     @PostMapping("/purchases")
     public void create(@RequestBody PurchaseDto newPurchase) {
         purchaseService.createPurchase(newPurchase);
