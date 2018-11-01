@@ -1,6 +1,7 @@
 package com.dlizarra.starter.purchase;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PurchaseService {
 
@@ -15,4 +16,6 @@ public interface PurchaseService {
     List<PurchaseDto> getPurchases();
 
     Integer getSum();
+
+    Map<String, Integer> getDetailedSum();
 }

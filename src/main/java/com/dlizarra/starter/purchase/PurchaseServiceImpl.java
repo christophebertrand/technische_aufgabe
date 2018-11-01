@@ -6,7 +6,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -60,5 +62,20 @@ public class PurchaseServiceImpl implements PurchaseService {
             total += p.getPrice();
         }
         return total;
+    }
+
+    @Override
+    public Map<String, Integer> getDetailedSum() {
+        Map<String, Integer> map = new HashMap<>();
+        final List<Purchase> purchases = purchaseRepository.findAll();
+        for (Purchase p : purchases) {
+            String currentUser = p.getUser();
+            int total = 0;
+            if (map.containsKey(currentUser)) {
+                total = map.get(currentUser);
+            }
+            map.put(currentUser, p.getPrice() + total);
+        }
+        return map;
     }
 }

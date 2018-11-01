@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PurchaseController {
@@ -19,6 +20,11 @@ public class PurchaseController {
     @GetMapping("/purchases/sum")
     public Integer getSum() {
         return purchaseService.getSum();
+    }
+
+    @GetMapping("/purchases/detailed_sum")
+    public Map<String, Integer> getDetailedSum() {
+        return purchaseService.getDetailedSum();
     }
 
     @PostMapping("/purchases")
