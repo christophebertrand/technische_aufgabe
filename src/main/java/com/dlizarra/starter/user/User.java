@@ -1,6 +1,7 @@
 package com.dlizarra.starter.user;
 
 // @formatter:off
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +18,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.dlizarra.starter.purchase.Purchase;
 import com.dlizarra.starter.support.security.CustomUserDetails;
 
 import com.dlizarra.starter.role.Role;
@@ -26,57 +28,62 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode(of = { "username", "roles", "enabled" })
-@ToString(of = { "id", "username" })
+@EqualsAndHashCode(of = {"username", "roles", "enabled"})
+@ToString(of = {"id", "username"})
 @Setter
 @Getter
 @Entity
 @Table(name = "users")
 public class User {
 
-	static final int MAX_LENGTH_USERNAME = 30;
+    static final int MAX_LENGTH_USERNAME = 30;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@Column(nullable = false, unique = true, length = MAX_LENGTH_USERNAME)
-	private String username;
+    @Column(nullable = false, unique = true, length = MAX_LENGTH_USERNAME)
+    private String username;
 
-	@Column(nullable = false)
+    @Column(nullable = false)
     //Attention: You may not want to do this in production applications
-	private String password;
+    private String password;
 
-	private boolean enabled;
-	private LocalDateTime creationTime;
-	private LocalDateTime modificationTime;
+    private boolean enabled;
+    private LocalDateTime creationTime;
+    private LocalDateTime modificationTime;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Role> roles = new HashSet<Role>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Role> roles = new HashSet<Role>();
 
-	public User() {
-	}
+    //TODO connect user
+//
+//	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	private Set<Purchase> purchases = new HashSet<>();
 
-	/**
-	 * Constructor used exclusively by {@link CustomUserDetails}}
-	 *
-	 * @param user
-	 */
-	public User(final User user) {
-		this.id = user.id;
-		this.username = user.username;
-		this.password = user.password;
-		this.enabled = user.enabled;
-	}
+    public User() {
+    }
 
-	@PrePersist
-	public void prePersist() {
-		creationTime = LocalDateTime.now();
-	}
+    /**
+     * Constructor used exclusively by {@link CustomUserDetails}}
+     *
+     * @param user
+     */
+    public User(final User user) {
+        this.id = user.id;
+        this.username = user.username;
+        this.password = user.password;
+        this.enabled = user.enabled;
+    }
 
-	@PreUpdate
-	public void preUpdate() {
-		modificationTime = LocalDateTime.now();
-	}
+    @PrePersist
+    public void prePersist() {
+        creationTime = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        modificationTime = LocalDateTime.now();
+    }
 
 }
